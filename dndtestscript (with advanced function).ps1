@@ -19,29 +19,23 @@ function Get-Stats
    {
       Switch ($StatRollChoice)
       {
-      ("a" -Or "standard") {
-        #Rolls 3 dice and adds the result.
+      {("A") -Or ("Standard")} {
+         #Rolls 3 dice and adds the result.
         $DiceResult = (1..6 | Get-Random) + (1..6 | Get-Random) + (1..6 | Get-Random)
-        return $DiceResult
-        Write-Output "Standard Ran"
         }
-      ("b" -Or "generous") {
+      {("B") -Or ("Generous")} {
         #Rolls 4 dice, drops the lowest, and adds the result.
         $DiceArray = (1..6 | Get-Random), (1..6 | Get-Random), (1..6 | Get-Random), (1..6 | Get-Random)
         $DiceArray = $DiceArray | Sort-Object
         $DiceResult = $DiceArray[$DiceArray.Count-1] + $DiceArray[$DiceArray.Count-2] + $DiceArray[$DiceArray.Count-3]
-        return $DiceResult
-        Write-Output "Generous Ran"
       }
-      ("c" -Or "random Array") {
+      {("c") -Or ("random Array")} {
       $DiceResult = 11
-      return $DiceResult
-      Write-Output "Array Ran"
       }
       default {
          Write-Output "Sorry that is an invalid option."
       }
-   }
+      }
    }
    End
    {
@@ -55,7 +49,7 @@ Write-Output "$($Player.Name), we're going to create your character now."
 
 Write-Output "Now, we'll need to roll you up a character,"
 Write-Output "How would you like to roll your stats? A) Standard, B) Generous, or C) Random Array ?"
-$StatRollChoice.ToLower() = Read-Host
+$StatRollChoice = Read-Host
 
 #Our Stat Block generation function.
 $Player.STRStat = Get-Stats
